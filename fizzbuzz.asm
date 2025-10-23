@@ -16,23 +16,21 @@ _start:
 loop_start:
     addl    $1, %r8d         # Increment loop counter
 
-    xorl    %r9d, %r9d
-
     # 5
     movl    %r8d, %eax       # Move loop counter to eax
     xorl    %edx, %edx        # Clear edx before division
     movl    $5, %ecx         # Divisor in ecx
     divl    %ecx              # Divide eax by ecx, quotient in eax, remainder in edx
     cmpl    $0, %edx          # Compare remainder with 0
-    jne     try_7
+    jne     try_7             # if not zero, try dividing by 7
     # 7
     movl    %r8d, %eax       # Move loop counter to eax
     xorl    %edx, %edx        # Clear edx before division
     movl    $7, %ecx         # Divisor in ecx
     divl    %ecx              # Divide eax by ecx, quotient in eax, remainder in edx
     cmpl    $0, %edx          # Compare remainder with 0
-    je      div_57
-    jmp     div_5
+    je      div_57            # if zero, print fizzbuzz
+    jmp     div_5             # else, means divisible just by 5
 
 try_7:
     movl    %r8d, %eax       # Move loop counter to eax
@@ -40,8 +38,8 @@ try_7:
     movl    $7, %ecx         # Divisor in ecx
     divl    %ecx              # Divide eax by ecx, quotient in eax, remainder in edx
     cmpl    $0, %edx          # Compare remainder with 0
-    jne     not_57
-    jmp     div_7
+    jne     not_57            # not divisible by 5 or 7
+    jmp     div_7             # divisible just by 7
 
 div_5:
     movl    $div5, %ecx      # Address of "5" (ecx = &div5)
